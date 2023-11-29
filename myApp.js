@@ -16,7 +16,12 @@ app.get("/json", (req, res) => {
     res.json({ message: "HELLO JSON" });
   } else res.json({ message: "Hello json" });
 });
-
-
+app.get("/now", (req, res,next) => {
+    let time = new Date().toString()
+    req.time = time
+    next()
+}, function(req,res){
+    res.json({time: req.time})
+})
 
 module.exports = app;
