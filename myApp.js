@@ -9,7 +9,11 @@ app.get("/", (req, res) => {
   res.sendFile(absolute);
 });
 app.get("/json", (req, res) => {
- res.json({ message: "Hello json" });
+  let mess = process.env.MESSAGE_STYLE;
+  console.log(mess);
+  if (mess === "uppercase") {
+    res.json({ message: "HELLO JSON" });
+  } else res.json({ message: "Hello json" });
 });
 
 module.exports = app;
