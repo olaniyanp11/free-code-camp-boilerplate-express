@@ -5,6 +5,9 @@ let express = require("express");
 let app = express();
 app.use("/public", express.static(__dirname + "/public"));
 app.use(auth);
+app.use(express.urlencoded({ extended: true }));
+
+
 
 app.get("/", (req, res) => {
   let absolute = __dirname + "/views/index.html";
@@ -28,8 +31,22 @@ app.get(
   }
 );
 app.get("/:word/echo", (req, res) => {
-    let word = req.params.word
-    res.json({echo : word})
+  let word = req.params.word;
+  res.json({ echo: word });
 });
 
+app
+  .route("/name")
+  .get((req, res) => {
+    let firstname = req.query.first;
+    let lastname = req.query.last;
+    let fname = `${firstname} ${lastname}`;
+    res.json({ name: fname });
+  })
+  .post((req, res) => {
+    let firstname = req.body.first;
+    let lastname = req.body.last;
+    let fname = `${firstname} ${lastname}`;
+    res.json({ name: fname });
+  });
 module.exports = app;
